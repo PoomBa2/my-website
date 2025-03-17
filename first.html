@@ -1,0 +1,307 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>questions</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('ви.jpg'); /* Фоновое изображение */
+            background-size: cover; /* Покрыть весь экран */
+            background-position: center; /* Центрирует изображение */
+
+            margin: 0;
+            font-family: Arial Black, sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+       
+
+        h1 {
+            text-align: center;
+            max-width: 350px; /* Ограничивает максимальную ширину заголовка */
+            margin: 0 auto; /* Центрирует заголовок по горизонтали */
+            word-wrap: break-word; /* Переносит длинные слова на новую строку */
+            padding: 10px; /* Добавляет отступы внутри элемента */
+
+
+            padding-bottom: 0px; /* Убирает отступ снизу */
+            margin-bottom: 130px; /*Добавляет отступ снизу заголовка <h1>.*/
+            position: relative;
+            z-index: 10; /* Обеспечивает, что заголовок будет поверх всех остальных элементов */
+        }
+
+        #text { /*текст после нажатия yes*/
+            display: none; /* Скрываем текст по умолчанию */
+            font-size: 34px;
+            color: #FF8C00;
+            margin-top: -80px;
+            top: 50px;
+            z-index: 10; /* Обеспечивает, что заголовок будет поверх всех остальных элементов */
+        }
+
+        .buttons { /*Описание стилей для контейнера кнопок*/
+
+            width: 500px;
+            height: 350px;
+            background: #F5DEB3;
+            border-radius: 30px;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            border: none;
+            display: flex;
+            gap: 50px;
+            position: absolute;
+            transition: all 0.1s ease;
+        }
+
+        .btn { /*стиль кнопки (OK)!!!!*/
+            padding: 20px 30px; /*Устанавливает внутренние отступы кнопки (отступ сверху/снизу — 15px, слева/справа — 30px).*/
+            font-size: 15px; /*Устанавливает размер шрифта внутри кнопки на 20 пикселей.*/
+            border: none; /*Убирает границу у кнопки, делая её внешний вид более чистым.*/
+            border-radius: 15px; /*Скругляет углы кнопки на 5 пикселей, придавая ей более мягкий и современный вид.*/
+            cursor: pointer; /*изменяет курсор при наведении*/
+            font-family: Arial Black, sans-serif;
+        }
+
+        .btnext { /*стиль кнопки (OK)!!!!*/
+            padding: 20px 30px; /*Устанавливает внутренние отступы кнопки (отступ сверху/снизу — 15px, слева/справа — 30px).*/
+            font-size: 20px; /*Устанавливает размер шрифта внутри кнопки на 20 пикселей.*/
+            border: none; /*Убирает границу у кнопки, делая её внешний вид более чистым.*/
+            border-radius: 15px; /*Скругляет углы кнопки на 5 пикселей, придавая ей более мягкий и современный вид.*/
+            cursor: pointer; /*изменяет курсор при наведении*/
+            font-family: Arial Black, sans-serif;
+        }
+
+        .btn-yes {
+            background-color: green;
+            color: white;
+            position: relative; /* Сдвигаем относительно её нормального положения */
+            top: 80px; /* Сдвигаем кнопку на 20px вниз */
+        }
+
+        .btn-no {
+            background-color: red;
+            color: white;
+            position: relative;
+            top: 80px; /* Сдвигаем кнопку на 20px вниз */
+            /*transform: translateX(-10%);*/
+        }
+
+        .btn-nextyes {
+            display: none;
+            background-color: mediumspringgreen;
+            color: black;
+            position: relative; /* Сдвигаем относительно её нормального положения */
+            top: 80px; /* Сдвигаем кнопку на 20px вниз */
+        }
+        .btn-nextno {
+            display: none;
+            background-color: mediumspringgreen;
+            color: black;
+            position: relative; /* Сдвигаем относительно её нормального положения */
+            top: 80px; /* Сдвигаем кнопку на 20px вниз */
+        }
+        .btn-next {
+            display: none;
+            background-color: FireBrick;
+            color: white;
+            position: relative; /* Сдвигаем относительно её нормального положения */
+            top: 80px; /* Сдвигаем кнопку на 20px вниз */
+        }
+
+            .btn-next:hover {
+                background-color: darkred;
+            }
+
+        .btn-yes:hover {
+            background-color: darkgreen;
+        }
+
+        .btn-no:hover {
+            background-color: darkred;
+        }
+    </style>
+
+
+
+
+</head>
+<body>
+
+
+
+
+
+    <h1> <span style="color: darkorange; font-size: 30px;">ТЫ ГОТОВА К ДОПРОСУ?</span> </h1> <!--заголовок-->
+    <div>
+    </div>
+    <div class="buttons">
+        <button class="btn btn-yes" id="btn-yes" onclick="showText('ДА')">ДА</button>
+        <button class="btn btn-no" id="btn-no" onclick="showText('НЕТ')">НЕТ</button> <!--id для идентификации в java-->
+        <button class="btnext btn-next" id="btn-next" onclick="Next()">DON'T STOP</button>
+    </div>
+
+    <script>
+        // Функция для добавления нажатой кнопки в строку
+        function addButtonToString(buttonName) {
+            let clickedButtons = localStorage.getItem('clickedButtons');
+            if (!clickedButtons) {
+                clickedButtons = ''; // Если еще нет записанных кнопок
+            }
+            clickedButtons += buttonName + ', '; // Добавляем название кнопки в строку
+            localStorage.setItem('clickedButtons', clickedButtons); // Сохраняем обновленную строку в localStorage
+        }
+
+        // Обработчики для кнопок
+        document.getElementById('btn-yes').addEventListener('click', function () {
+            addButtonToString('ДА (first)');
+        });
+
+        document.getElementById('btn-no').addEventListener('click', function () {
+            addButtonToString('НЕТ (first)');
+        });
+
+    </script>
+
+
+    <script>
+        function Next() {
+            window.location.href = 'second.html'; // Перенаправляем на страницу 2
+        }
+    </script>
+
+    <div id="text">Я так и знал!</div>  <!--Текст, который будет отображаться после нажатия-->
+    <script>
+        document.getElementById('btn-yes').addEventListener('click', function () {
+            document.querySelector('.btn-yes').style.display = 'none'; // Скрываем кнопки
+            document.querySelector('.btn-no').style.display = 'none'; // Скрываем кнопки
+            document.querySelector('h1').style.display = 'none'; // Скрываем кнопки
+            document.getElementById('text').style.display = 'block'; // Показываем текст
+            document.getElementById('btn-next').style.display = 'block'; // Показываем next
+        });
+        document.getElementById('btn-no').addEventListener('click', function () {
+            document.querySelector('.btn-yes').style.display = 'none'; // Скрываем кнопки
+            document.querySelector('.btn-no').style.display = 'none'; // Скрываем кнопки
+            document.querySelector('h1').style.display = 'none'; // Скрываем кнопки
+            document.getElementById('text').style.display = 'block'; // Показываем текст
+            document.getElementById('btn-next').style.display = 'block'; // Показываем next
+        });
+        document.getElementById('btn-next').addEventListener('click', function () {
+            document.querySelector('.btn-yes').style.display = 'none'; // Скрываем кнопки
+            document.querySelector('.btn-no').style.display = 'none'; // Скрываем кнопки
+            document.querySelector('h1').style.display = 'none'; // Скрываем кнопки
+            document.getElementById('text').style.display = 'block'; // Показываем текст
+            document.getElementById('btn-next').style.display = 'block'; // Показываем next
+        });
+
+    </script>
+
+    <script>
+        function showText(choice) {
+            if (choice === "ДА") {
+                document.getElementById("text").textContent = "ТОГДА ВПЕРЕД!";
+            } else {
+                document.getElementById("text").textContent = "ТАК ПОДГОТОВЬСЯ!";
+            }
+        }
+    </script>
+
+    <!--<script>
+        const button = document.getElementById('btn-no');
+        const container = document.querySelector('.buttons');
+
+        function teleportButton() {
+            // Получаем размеры контейнера
+            const containerWidth = container.offsetWidth;
+            const containerHeight = container.offsetHeight;
+
+            // Получаем размеры кнопки
+            const buttonWidth = button.offsetWidth;
+            const buttonHeight = button.offsetHeight;
+
+            // Находим центр родительского контейнера
+            const centerX = containerWidth / 2;
+            const centerY = containerHeight / 2;
+
+            // Генерируем случайные смещения от центра контейнера
+            // Например, смещения от -150 до 150 пикселей
+            const randomX = Math.random() * 300 - 400; // Случайное смещение по X (от -150 до 150)
+            const randomY = Math.random() * 300 - 280; // Случайное смещение по Y (от -150 до 150)
+
+            // Вычисляем новые координаты кнопки относительно центра контейнера
+            const newX = centerX + randomX - 2 * buttonWidth / 2; // Смещаем кнопку относительно центра
+            const newY = centerY + randomY - 2 * buttonHeight / 2; // Смещаем кнопку относительно центра
+
+            // Устанавливаем новые координаты кнопки
+            button.style.left = `${newX}px`;
+            button.style.top = `${newY}px`;
+        }
+
+        // Добавляем событие на наведение мыши на кнопку
+        button.addEventListener('mouseover', teleportButton);
+
+        // Добавляем обработчик клика на заголовок
+        title.addEventListener('click', () => {
+            teleportButton(); // При клике на заголовок, перемещаем кнопку
+        });
+
+
+
+
+
+
+
+
+
+
+
+    </script>-->
+</body>
+</html>
+
+
+
+
+<!--<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Файл 1</title>
+</head>
+<body>
+    <h1>Нажимайте кнопки, чтобы записать их в строку</h1>
+
+    <button id="button1">Кнопка 1</button>
+    <button id="button2">Кнопка 2</button>
+
+    <script>
+        // Функция для добавления нажатой кнопки в строку
+        function addButtonToString(buttonName) {
+            let clickedButtons = localStorage.getItem('clickedButtons');
+            if (!clickedButtons) {
+                clickedButtons = ''; // Если еще нет записанных кнопок
+            }
+            clickedButtons += buttonName + ', '; // Добавляем название кнопки в строку
+            localStorage.setItem('clickedButtons', clickedButtons); // Сохраняем обновленную строку в localStorage
+        }
+
+        // Обработчики для кнопок
+        document.getElementById('button1').addEventListener('click', function () {
+            addButtonToString('Кнопка 1');
+        });
+
+        document.getElementById('button2').addEventListener('click', function () {
+            addButtonToString('Кнопка 2');
+        });
+    </script>
+</body>
+</html>-->
