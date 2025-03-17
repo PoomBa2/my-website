@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>questions</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background:; /*url('slep.jpg');*/ /* Фоновое изображение */
+            background-image: url('https://cdn1.ozone.ru/s3/multimedia-h/6575750717.jpg');
+            background-size: cover; /* Покрыть весь экран */
+            background-position: center; /* Центрирует изображение */
+
+            margin: 0;
+            font-family: Arial Black, sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        h1 {
+            text-align: center;
+            max-width: 350px; /* Ограничивает максимальную ширину заголовка */
+            margin: 0 auto; /* Центрирует заголовок по горизонтали */
+            word-wrap: break-word; /* Переносит длинные слова на новую строку */
+            top: -50px; /* Добавляет отступы внутри элемента */
+
+
+            padding-bottom: 0px; /* Убирает отступ снизу */
+            margin-bottom: 130px; /*Добавляет отступ снизу заголовка <h1>.*/
+            position: relative;
+            z-index: 1; /* Обеспечивает, что заголовок будет поверх всех остальных элементов */
+        }
+        #text { /*текст после нажатия yes*/
+            display: none; /* Скрываем текст по умолчанию */
+            font-size: 34px;
+            color: darkgreen;
+            margin-top: -100px;
+            z-index: 10;
+        }
+        .buttons { /*Описание стилей для контейнера кнопок*/
+
+            width: 500px;
+            height: 350px;
+            background: #F5DEB3;
+            border-radius: 30px;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            border: none;
+            display: flex;
+            gap: 50px;
+            position: absolute;
+            transition: all 0.1s ease;
+        }
+
+        .btn { /*стиль кнопки (OK)!!!!*/
+            padding: 10px 15px; /*Устанавливает внутренние отступы кнопки (отступ сверху/снизу — 15px, слева/справа — 30px).*/
+            font-size: 15px; /*Устанавливает размер шрифта внутри кнопки на 20 пикселей.*/
+            border: none; /*Убирает границу у кнопки, делая её внешний вид более чистым.*/
+            border-radius: 15px; /*Скругляет углы кнопки на 5 пикселей, придавая ей более мягкий и современный вид.*/
+            cursor: pointer; /*изменяет курсор при наведении*/
+            font-family: Arial Black, sans-serif;
+        }
+        .btnext { /*стиль кнопки (OK)!!!!*/
+            padding: 20px 30px; /*Устанавливает внутренние отступы кнопки (отступ сверху/снизу — 15px, слева/справа — 30px).*/
+            font-size: 20px; /*Устанавливает размер шрифта внутри кнопки на 20 пикселей.*/
+            border: none; /*Убирает границу у кнопки, делая её внешний вид более чистым.*/
+            border-radius: 15px; /*Скругляет углы кнопки на 5 пикселей, придавая ей более мягкий и современный вид.*/
+            cursor: pointer; /*изменяет курсор при наведении*/
+            font-family: Arial Black, sans-serif;
+        }
+        .btn-yes {
+            background-color: green;
+            color: white;
+            position: relative; /* Сдвигаем относительно её нормального положения */
+            top: 80px; /* Сдвигаем кнопку на 20px вниз */
+            
+        }
+
+        .btn-no {
+            background-color: red;
+            color: white;
+            position: relative;
+            top: 80px; /* Сдвигаем кнопку на 20px вниз */
+            /*transform: translateX(-10%);*/
+            z-index: 2; /* Кнопка выше заголовка */
+        }
+        .btn-next {
+            display: none;
+            background-color: green;
+            color: white;
+            position: relative; /* Сдвигаем относительно её нормального положения */
+            top: 80px; /* Сдвигаем кнопку на 20px вниз */
+        }
+        .btn-yes:hover {
+            background-color: darkgreen;
+        }
+
+        .btn-no:hover {
+            background-color: darkred;
+        }
+        .btn-next:hover {
+            background-color: darkgreen;
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            opacity: 0.7;
+            border-radius: 50%;
+            animation: fall 2s linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+        
+    </style>
+
+
+
+
+</head>
+<body>
+
+
+ 
+
+
+    <h1> <span style="color: darkorange; font-size: 20px;">ТЫ УШЛЕПОК?</span> </h1> <!--заголовок-->
+    <div class="buttons">
+        <button class="btn btn-yes" id="btn-yes" onclick="showConfetti()">ДА</button>
+        <button class="btn btn-no" id="btn-no">НЕТ</button> <!--id для идентификации в java-->
+        <!--<button class="btnext btn-next" id="btn-next" onclick="Next()">Заключение</button>-->
+    </div>
+
+    <div id="text">Я так и знал!</div> <!-- Текст, который будет отображаться после нажатия -->
+
+    <script>
+        document.getElementById('btn-yes').addEventListener('click', function () {
+            document.querySelector('.btn-yes').style.display = 'none'; // Скрываем кнопки
+            document.querySelector('.btn-no').style.display = 'none'; // Скрываем кнопки
+            document.querySelector('h1').style.display = 'none'; // Скрываем кнопки
+            document.getElementById('text').style.display = 'block'; // Показываем текст
+            document.getElementById('btn-next').style.display = 'block'; // Показываем next
+        });
+        document.getElementById('btn-no').addEventListener('click', function () {
+            document.querySelector('.btn-yes').style.display = 'none'; // Скрываем кнопки
+            document.querySelector('.btn-no').style.display = 'none'; // Скрываем кнопки
+            document.querySelector('h1').style.display = 'none'; // Скрываем кнопки
+            document.getElementById('text').style.display = 'block'; // Показываем текст
+            document.getElementById('btn-next').style.display = 'block'; // Показываем next
+        });
+        document.getElementById('btn-next').addEventListener('click', function () {
+            document.querySelector('.btn-yes').style.display = 'none'; // Скрываем кнопки
+            document.querySelector('.btn-no').style.display = 'none'; // Скрываем кнопки
+            document.querySelector('h1').style.display = 'none'; // Скрываем кнопки
+            document.getElementById('text').style.display = 'block'; // Показываем текст
+            document.getElementById('btn-next').style.display = 'block'; // Показываем next
+        });
+    </script>
+
+    <script>
+        const title = document.querySelector('h1'); // Получаем заголовок
+        const button = document.getElementById('btn-no');
+        const container = document.querySelector('.buttons');
+
+        function teleportButton() {
+            // Получаем размеры контейнера
+            const containerWidth = container.offsetWidth;
+            const containerHeight = container.offsetHeight;
+
+            // Получаем размеры кнопки
+            const buttonWidth = button.offsetWidth;
+            const buttonHeight = button.offsetHeight;
+
+            // Находим центр родительского контейнера
+            const centerX = containerWidth / 2;
+            const centerY = containerHeight / 2;
+
+            // Генерируем случайные смещения от центра контейнера
+            // Например, смещения от -150 до 150 пикселей
+            const randomX = Math.random() * 300 - 400; // Случайное смещение по X (от -150 до 150)
+            const randomY = Math.random() * 300 - 280; // Случайное смещение по Y (от -150 до 150)
+
+            // Вычисляем новые координаты кнопки относительно центра контейнера
+            const newX = centerX + randomX - 2 * buttonWidth / 2; // Смещаем кнопку относительно центра
+            const newY = centerY + randomY - 2 * buttonHeight / 2; // Смещаем кнопку относительно центра
+
+            // Устанавливаем новые координаты кнопки
+            button.style.left = `${newX}px`;
+            button.style.top = `${newY}px`;
+        }
+
+        // Добавляем событие на наведение мыши на кнопку
+        button.addEventListener('mouseover', teleportButton);
+
+        //// Событие при наведении на заголовок
+        //title.addEventListener('mouseover', teleportButton);
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+    <script>
+        function Next() {
+            window.location.href = 'last.html'; // Перенаправляем на страницу 2
+        }
+    </script>
+    <script>
+        function showConfetti() {
+            for (let i = 0; i < 100; i++) {
+                let confetti = document.createElement("div");
+                confetti.classList.add("confetti");
+
+                document.body.appendChild(confetti);
+
+                confetti.style.left = Math.random() * window.innerWidth + "px";
+                confetti.style.top = "-10px";
+                confetti.style.backgroundColor = getRandomColor();
+                confetti.style.animationDuration = (Math.random() * 2 + 1) + "s";
+                confetti.style.width = confetti.style.height = Math.random() * 10 + 5 + "px";
+
+                setTimeout(() => {
+                    confetti.remove();
+                }, 200000000);
+            }
+        }
+
+        function getRandomColor() {
+            let colors = ["red", "blue", "yellow", "green", "purple", "orange", "pink"];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+    </script>
+</body>
+</html>
